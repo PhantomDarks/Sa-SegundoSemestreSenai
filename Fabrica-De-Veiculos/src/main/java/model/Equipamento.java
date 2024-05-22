@@ -1,13 +1,18 @@
 package model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 import java.util.Objects;
 
 @Entity
 public class Equipamento {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idEquipamento;
+
     private String tipoEquipamento;
     private String descricaoEquipamento;
     private String estadoEquipamento;
@@ -19,7 +24,6 @@ public class Equipamento {
         this.descricaoEquipamento = descricaoEquipamento;
         this.estadoEquipamento = estadoEquipamento;
     }
-
 
 
     public Long getIdEquipamento() {
@@ -77,6 +81,7 @@ public class Equipamento {
         result = 31 * result + (estadoEquipamento != null ? estadoEquipamento.hashCode() : 0);
         return result;
     }
+
     @Override
     public String toString() {
         return "Equipamento{" +
