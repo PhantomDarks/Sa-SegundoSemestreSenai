@@ -9,7 +9,6 @@ import java.util.Objects;
 @Entity
 public class Manutencao {
     @Id
-    @ManyToOne
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idManutencao;
     @ManyToOne()
