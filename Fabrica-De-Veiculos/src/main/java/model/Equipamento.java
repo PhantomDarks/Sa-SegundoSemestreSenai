@@ -1,10 +1,8 @@
 package model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -16,15 +14,17 @@ public class Equipamento {
     private String tipoEquipamento;
     private String descricaoEquipamento;
     private String estadoEquipamento;
+    @OneToMany(mappedBy = "equipamento")
+    private List<Manutencao> listaDeManutencao;
 
 
-    public Equipamento(Long idEquipamento, String tipoEquipamento, String descricaoEquipamento, String estadoEquipamento) {
+    public Equipamento(Long idEquipamento, String tipoEquipamento, String descricaoEquipamento, String estadoEquipamento, List<Manutencao> listaDeManutencao) {
         this.idEquipamento = idEquipamento;
         this.tipoEquipamento = tipoEquipamento;
         this.descricaoEquipamento = descricaoEquipamento;
         this.estadoEquipamento = estadoEquipamento;
+        this.listaDeManutencao = listaDeManutencao;
     }
-
 
     public Long getIdEquipamento() {
         return idEquipamento;
@@ -58,6 +58,25 @@ public class Equipamento {
         this.estadoEquipamento = estadoEquipamento;
     }
 
+    public List<Manutencao> getListaDeManutencao() {
+        return listaDeManutencao;
+    }
+
+    public void setListaDeManutencao(List<Manutencao> listaDeManutencao) {
+        this.listaDeManutencao = listaDeManutencao;
+    }
+
+    @Override
+    public String toString() {
+        return "Equipamento{" +
+                "idEquipamento=" + idEquipamento +
+                ", tipoEquipamento='" + tipoEquipamento + '\'' +
+                ", descricaoEquipamento='" + descricaoEquipamento + '\'' +
+                ", estadoEquipamento='" + estadoEquipamento + '\'' +
+                ", listaDeManutencao=" + listaDeManutencao +
+                '}';
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -70,7 +89,9 @@ public class Equipamento {
             return false;
         if (!Objects.equals(descricaoEquipamento, that.descricaoEquipamento))
             return false;
-        return Objects.equals(estadoEquipamento, that.estadoEquipamento);
+        if (!Objects.equals(estadoEquipamento, that.estadoEquipamento))
+            return false;
+        return Objects.equals(listaDeManutencao, that.listaDeManutencao);
     }
 
     @Override
@@ -79,16 +100,7 @@ public class Equipamento {
         result = 31 * result + (tipoEquipamento != null ? tipoEquipamento.hashCode() : 0);
         result = 31 * result + (descricaoEquipamento != null ? descricaoEquipamento.hashCode() : 0);
         result = 31 * result + (estadoEquipamento != null ? estadoEquipamento.hashCode() : 0);
+        result = 31 * result + (listaDeManutencao != null ? listaDeManutencao.hashCode() : 0);
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return "Equipamento{" +
-                "idEquipamento=" + idEquipamento +
-                ", tipoEquipamento='" + tipoEquipamento + '\'' +
-                ", descricaoEquipamento='" + descricaoEquipamento + '\'' +
-                ", estadoEquipamento='" + estadoEquipamento + '\'' +
-                '}';
     }
 }

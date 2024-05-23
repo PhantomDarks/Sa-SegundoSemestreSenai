@@ -1,9 +1,6 @@
 package model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
@@ -12,9 +9,12 @@ import java.util.Objects;
 @Entity
 public class Manutencao {
     @Id
+    @ManyToOne
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idManutencao;
-    private Equipamento idEquipamento;
+    @ManyToOne()
+    @JoinColumn(name = "idEquipamento", referencedColumnName = "idEquipamento")
+    private Equipamento equipamento;
     private LocalDateTime dataTimeInicio;
     private LocalDateTime  dataTimeFim;
     private String descricaoServico;
@@ -25,7 +25,7 @@ public class Manutencao {
 
     public Manutencao(Long idManutencao, Equipamento idEquipamento, LocalDateTime dataTimeInicio, LocalDateTime dataTimeFim, String descricaoServico, String estado) {
         this.idManutencao = idManutencao;
-        this.idEquipamento = idEquipamento;
+        this.equipamento = idEquipamento;
         this.dataTimeInicio = dataTimeInicio;
         this.dataTimeFim = dataTimeFim;
         this.descricaoServico = descricaoServico;
@@ -41,11 +41,11 @@ public class Manutencao {
     }
 
     public Equipamento getIdEquipamento() {
-        return idEquipamento;
+        return equipamento;
     }
 
     public void setIdEquipamento(Equipamento idEquipamento) {
-        this.idEquipamento = idEquipamento;
+        this.equipamento = idEquipamento;
     }
 
     public LocalDateTime getDataTimeInicio() {
@@ -84,7 +84,7 @@ public class Manutencao {
     public String toString() {
         return "Manutencao{" +
                 "idManutencao=" + idManutencao +
-                ", idEquipamento=" + idEquipamento +
+                ", idEquipamento=" + equipamento +
                 ", dataTimeInicio=" + dataTimeInicio +
                 ", dataTimeFim=" + dataTimeFim +
                 ", descricaoServico='" + descricaoServico + '\'' +
@@ -100,7 +100,7 @@ public class Manutencao {
         Manutencao that = (Manutencao) o;
 
         if (!idManutencao.equals(that.idManutencao)) return false;
-        if (!Objects.equals(idEquipamento, that.idEquipamento))
+        if (!Objects.equals(equipamento, that.equipamento))
             return false;
         if (!Objects.equals(dataTimeInicio, that.dataTimeInicio))
             return false;
@@ -113,7 +113,7 @@ public class Manutencao {
     @Override
     public int hashCode() {
         int result = idManutencao.hashCode();
-        result = 31 * result + (idEquipamento != null ? idEquipamento.hashCode() : 0);
+        result = 31 * result + (equipamento != null ? equipamento.hashCode() : 0);
         result = 31 * result + (dataTimeInicio != null ? dataTimeInicio.hashCode() : 0);
         result = 31 * result + (dataTimeFim != null ? dataTimeFim.hashCode() : 0);
         result = 31 * result + (descricaoServico != null ? descricaoServico.hashCode() : 0);
