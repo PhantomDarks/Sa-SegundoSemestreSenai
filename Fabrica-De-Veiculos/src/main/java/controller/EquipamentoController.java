@@ -1,4 +1,4 @@
-package Controller;
+package controller;
 import model.Equipamento;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
