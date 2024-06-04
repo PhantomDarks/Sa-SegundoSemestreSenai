@@ -37,8 +37,8 @@ import java.util.Optional;
          */
         @GetMapping("/{id}")
         public ResponseEntity<Estoque> getEstoqueById(@PathVariable Long id) {
-            Optional<Estoque> equipamentoBuscado = estoqueRepository.findById(id);
-            return equipamentoBuscado.map(ResponseEntity::ok).orElseGet(() ->
+            Optional<Estoque> estoqueBuscado = estoqueRepository.findById(id);
+            return estoqueBuscado.map(ResponseEntity::ok).orElseGet(() ->
                     ResponseEntity.notFound().build());
         }
 
