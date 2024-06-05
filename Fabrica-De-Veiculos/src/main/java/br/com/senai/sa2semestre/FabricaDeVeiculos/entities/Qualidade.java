@@ -15,4 +15,21 @@ public class Qualidade {
     private String dataHora;
     private String resultado;
     private  String comentarios;
+
+
+    public Long getIdInspecao() {
+        return idInspecao;
+    }
+
+    public void setIdInspecao(Long idInspecao) {
+        this.idInspecao = idInspecao;
+    }
+
+    public Long getIdProducao() {
+        return idProducao;
+    }
+
+    public void setIdProducao(Long idProducao) {
+        this.idProducao = idProducao;
+    }
 }

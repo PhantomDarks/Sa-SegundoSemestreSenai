@@ -15,4 +15,13 @@ public class Producao {
     private Long quantidadeProduzida;
 
     private String estado;
+
+
+    public Long getIdProducao() {
+        return idProducao;
+    }
+
+    public void setIdProducao(Long idProducao) {
+        this.idProducao = idProducao;
+    }
 }

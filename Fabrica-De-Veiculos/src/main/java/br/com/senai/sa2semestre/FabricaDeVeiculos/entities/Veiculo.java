@@ -1,18 +1,22 @@
 package br.com.senai.sa2semestre.FabricaDeVeiculos.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Veiculo {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long chassi;
+    @Column(name = "Chassi", unique = true)
+    private String chassi;
     private String modelo;
     private Long ano;
 
     private String cor;
 
+    public String getChassi() {
+        return chassi;
+    }
+
+    public void setChassi(String chassi) {
+        this.chassi = chassi;
+    }
 }

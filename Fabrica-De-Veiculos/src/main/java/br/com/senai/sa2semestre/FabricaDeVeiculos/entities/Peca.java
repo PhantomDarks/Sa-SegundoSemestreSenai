@@ -9,9 +9,17 @@ public class Peca {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idPeca;
     private String pecas;
     private String descrição;
     @OneToMany(mappedBy = "pecas")
     private List<Estoque> estoqueList;
+
+    public Long getIdPeca() {
+        return idPeca;
+    }
+
+    public void setIdPeca(Long idPeca) {
+        this.idPeca = idPeca;
+    }
 }
