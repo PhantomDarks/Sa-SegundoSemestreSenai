@@ -1,5 +1,6 @@
 package br.com.senai.sa2semestre.FabricaDeVeiculos.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -22,6 +23,7 @@ public class Equipamento {
     private String estado;
 
     @OneToMany(mappedBy = "equipamento")
+    @JsonIgnore
     private List<Manutencao> listaDeManutencoes;
 
     /**

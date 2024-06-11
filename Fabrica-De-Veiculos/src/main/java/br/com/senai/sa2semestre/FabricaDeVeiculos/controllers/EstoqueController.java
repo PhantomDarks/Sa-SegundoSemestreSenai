@@ -14,7 +14,7 @@ import java.util.Optional;
      * Controlador REST para gerenciamento de equipamentos.
      */
     @RestController
-    @RequestMapping("/estoque")
+    @RequestMapping("/estoques")
     public class EstoqueController {
 
         @Autowired

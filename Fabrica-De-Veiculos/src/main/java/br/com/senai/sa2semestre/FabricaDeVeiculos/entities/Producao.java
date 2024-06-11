@@ -1,10 +1,9 @@
 package br.com.senai.sa2semestre.FabricaDeVeiculos.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -13,21 +12,29 @@ public class Producao {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idProducao;
     private String dataHora;
-    private Long idPeca;
     private Long quantidadeProduzida;
 
     private String estado;
+
+    @ManyToOne()
+    @JoinColumn(name = "idPeca", referencedColumnName = "idPeca")
+    private Peca pecas;
+
+    @OneToMany(mappedBy = "producao")
+    @JsonIgnore
+    private List<Qualidade> qualidadesList;
 
 
     public Producao() {
     }
 
-    public Producao(Long idProducao, String dataHora, Long idPeca, Long quantidadeProduzida, String estado) {
+    public Producao(Long idProducao, String dataHora, Long idPeca, Long quantidadeProduzida, String estado, Peca pecas, List<Qualidade> qualidadesList) {
         this.idProducao = idProducao;
         this.dataHora = dataHora;
-        this.idPeca = idPeca;
         this.quantidadeProduzida = quantidadeProduzida;
         this.estado = estado;
+        this.pecas = pecas;
+        this.qualidadesList = qualidadesList;
     }
 
     public Long getIdProducao() {
@@ -46,14 +53,6 @@ public class Producao {
         this.dataHora = dataHora;
     }
 
-    public Long getIdPeca() {
-        return idPeca;
-    }
-
-    public void setIdPeca(Long idPeca) {
-        this.idPeca = idPeca;
-    }
-
     public Long getQuantidadeProduzida() {
         return quantidadeProduzida;
     }
@@ -70,14 +69,31 @@ public class Producao {
         this.estado = estado;
     }
 
+    public Peca getPecas() {
+        return pecas;
+    }
+
+    public void setPecas(Peca pecas) {
+        this.pecas = pecas;
+    }
+
+    public List<Qualidade> getQualidadesList() {
+        return qualidadesList;
+    }
+
+    public void setQualidadesList(List<Qualidade> qualidadesList) {
+        this.qualidadesList = qualidadesList;
+    }
+
     @Override
     public String toString() {
         return "Producao{" +
                 "idProducao=" + idProducao +
                 ", dataHora='" + dataHora + '\'' +
-                ", idPeca=" + idPeca +
                 ", quantidadeProduzida=" + quantidadeProduzida +
                 ", estado='" + estado + '\'' +
+                ", pecas=" + pecas +
+                ", qualidadesList=" + qualidadesList +
                 '}';
     }
 
@@ -90,19 +106,21 @@ public class Producao {
 
         if (!idProducao.equals(producao.idProducao)) return false;
         if (!Objects.equals(dataHora, producao.dataHora)) return false;
-        if (!idPeca.equals(producao.idPeca)) return false;
         if (!Objects.equals(quantidadeProduzida, producao.quantidadeProduzida))
             return false;
-        return Objects.equals(estado, producao.estado);
+        if (!Objects.equals(estado, producao.estado)) return false;
+        if (!Objects.equals(pecas, producao.pecas)) return false;
+        return Objects.equals(qualidadesList, producao.qualidadesList);
     }
 
     @Override
     public int hashCode() {
         int result = idProducao.hashCode();
         result = 31 * result + (dataHora != null ? dataHora.hashCode() : 0);
-        result = 31 * result + idPeca.hashCode();
         result = 31 * result + (quantidadeProduzida != null ? quantidadeProduzida.hashCode() : 0);
         result = 31 * result + (estado != null ? estado.hashCode() : 0);
+        result = 31 * result + (pecas != null ? pecas.hashCode() : 0);
+        result = 31 * result + (qualidadesList != null ? qualidadesList.hashCode() : 0);
         return result;
     }
 }
