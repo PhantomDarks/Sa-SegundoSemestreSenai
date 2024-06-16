@@ -8,14 +8,17 @@ import java.util.Objects;
 
 @Entity
 public class Manutencao {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idManutencao;
+
     @ManyToOne()
-    @JoinColumn(name = "idEquipamento", referencedColumnName = "idEquipamento")
+    @JoinColumn(name = "idEquipamento")
     private Equipamento equipamento;
+
     private LocalDateTime dataTimeInicio;
-    private LocalDateTime  dataTimeFim;
+    private LocalDateTime dataTimeFim;
     private String descricaoServico;
     private String estado;
 
@@ -97,26 +100,17 @@ public class Manutencao {
         if (o == null || getClass() != o.getClass()) return false;
 
         Manutencao that = (Manutencao) o;
-
-        if (!idManutencao.equals(that.idManutencao)) return false;
-        if (!Objects.equals(equipamento, that.equipamento))
-            return false;
-        if (!Objects.equals(dataTimeInicio, that.dataTimeInicio))
-            return false;
-        if (!Objects.equals(dataTimeFim, that.dataTimeFim)) return false;
-        if (!Objects.equals(descricaoServico, that.descricaoServico))
-            return false;
-        return Objects.equals(estado, that.estado);
+        return idManutencao.equals(that.idManutencao) && equipamento.equals(that.equipamento) && Objects.equals(dataTimeInicio, that.dataTimeInicio) && Objects.equals(dataTimeFim, that.dataTimeFim) && Objects.equals(descricaoServico, that.descricaoServico) && Objects.equals(estado, that.estado);
     }
 
     @Override
     public int hashCode() {
         int result = idManutencao.hashCode();
-        result = 31 * result + (equipamento != null ? equipamento.hashCode() : 0);
-        result = 31 * result + (dataTimeInicio != null ? dataTimeInicio.hashCode() : 0);
-        result = 31 * result + (dataTimeFim != null ? dataTimeFim.hashCode() : 0);
-        result = 31 * result + (descricaoServico != null ? descricaoServico.hashCode() : 0);
-        result = 31 * result + (estado != null ? estado.hashCode() : 0);
+        result = 31 * result + equipamento.hashCode();
+        result = 31 * result + Objects.hashCode(dataTimeInicio);
+        result = 31 * result + Objects.hashCode(dataTimeFim);
+        result = 31 * result + Objects.hashCode(descricaoServico);
+        result = 31 * result + Objects.hashCode(estado);
         return result;
     }
 }
