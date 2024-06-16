@@ -1,5 +1,6 @@
 package br.com.senai.sa2semestre.FabricaDeVeiculos.controllers;
 import br.com.senai.sa2semestre.FabricaDeVeiculos.entities.Equipamento;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

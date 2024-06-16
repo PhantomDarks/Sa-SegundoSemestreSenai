@@ -17,12 +17,10 @@ public class Equipamento {
     private Long idEquipamento;
 
     private String tipoEquipamento;
-
     private String descricao;
-
     private String estado;
 
-    @OneToMany(mappedBy = "equipamento")
+    @OneToMany(mappedBy = "equipamento", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Manutencao> listaDeManutencoes;
 
