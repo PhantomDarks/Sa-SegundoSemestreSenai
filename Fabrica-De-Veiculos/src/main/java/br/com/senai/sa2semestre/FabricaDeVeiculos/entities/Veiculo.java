@@ -1,6 +1,7 @@
 package br.com.senai.sa2semestre.FabricaDeVeiculos.entities;
 
 import jakarta.persistence.*;
+import org.hibernate.sql.results.graph.Fetch;
 
 import java.util.*;
 
@@ -11,24 +12,24 @@ public class Veiculo {
     private String chassi;
     private String modelo;
     private Long ano;
-
     private String cor;
-    @ManyToMany
+
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "Veiculos_Pecas",
-            joinColumns = @JoinColumn(name = "chassi"),
-            inverseJoinColumns = @JoinColumn(name = "idPeca")
-    )
-    private Set<Peca> pecas = new HashSet<>();
+                name = "Veiculo_Pecas",
+            joinColumns = @JoinColumn(name = "chassi", referencedColumnName = "chassi"),
+            inverseJoinColumns = @JoinColumn(name = "id_peca", referencedColumnName = "idPeca"))
+    private List<Peca> pecas = new ArrayList<>();
 
     public Veiculo() {
     }
 
-    public Veiculo(String chassi, String modelo, Long ano, String cor) {
+    public Veiculo(String chassi, String modelo, Long ano, String cor, List<Peca> pecas) {
         this.chassi = chassi;
         this.modelo = modelo;
         this.ano = ano;
         this.cor = cor;
+        this.pecas = pecas;
     }
 
     public String getChassi() {
@@ -63,6 +64,14 @@ public class Veiculo {
         this.cor = cor;
     }
 
+    public List<Peca> getPecas() {
+        return pecas;
+    }
+
+    public void setPecas(List<Peca> pecas) {
+        this.pecas = pecas;
+    }
+
     @Override
     public String toString() {
         return "Veiculo{" +
@@ -80,21 +89,17 @@ public class Veiculo {
         if (o == null || getClass() != o.getClass()) return false;
 
         Veiculo veiculo = (Veiculo) o;
-
-        if (!chassi.equals(veiculo.chassi)) return false;
-        if (!Objects.equals(modelo, veiculo.modelo)) return false;
-        if (!Objects.equals(ano, veiculo.ano)) return false;
-        if (!Objects.equals(cor, veiculo.cor)) return false;
-        return Objects.equals(pecas, veiculo.pecas);
+        return chassi.equals(veiculo.chassi) && Objects.equals(modelo, veiculo.modelo) && Objects.equals(ano, veiculo.ano) && Objects.equals(cor, veiculo.cor) && Objects.equals(pecas, veiculo.pecas);
     }
 
     @Override
     public int hashCode() {
         int result = chassi.hashCode();
-        result = 31 * result + (modelo != null ? modelo.hashCode() : 0);
-        result = 31 * result + (ano != null ? ano.hashCode() : 0);
-        result = 31 * result + (cor != null ? cor.hashCode() : 0);
-        result = 31 * result + (pecas != null ? pecas.hashCode() : 0);
+        result = 31 * result + Objects.hashCode(modelo);
+        result = 31 * result + Objects.hashCode(ano);
+        result = 31 * result + Objects.hashCode(cor);
+        result = 31 * result + Objects.hashCode(pecas);
         return result;
     }
 }
+

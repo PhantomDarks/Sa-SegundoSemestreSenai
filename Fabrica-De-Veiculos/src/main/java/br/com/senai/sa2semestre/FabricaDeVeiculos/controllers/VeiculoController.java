@@ -1,13 +1,16 @@
 package br.com.senai.sa2semestre.FabricaDeVeiculos.controllers;
 
+import br.com.senai.sa2semestre.FabricaDeVeiculos.entities.Peca;
 import br.com.senai.sa2semestre.FabricaDeVeiculos.entities.Veiculo;
+import br.com.senai.sa2semestre.FabricaDeVeiculos.repositories.PecaRepository;
 import br.com.senai.sa2semestre.FabricaDeVeiculos.repositories.VeiculoRepository;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/veiculos")
@@ -16,6 +19,9 @@ public class VeiculoController {
     @Autowired
     private VeiculoRepository veiculoRepository;
 
+    @Autowired
+    private PecaRepository pecaRepository;
+
     /**
      * Obtém todos os veículos.
      *
@@ -23,6 +29,7 @@ public class VeiculoController {
      */
     @GetMapping
     public List<Veiculo> getAllVeiculo() {
+
         return veiculoRepository.findAll();
     }
 
@@ -47,7 +54,19 @@ public class VeiculoController {
      */
     @PostMapping
     public Veiculo createVeiculo(@RequestBody Veiculo veiculo) {
-        return veiculoRepository.save(veiculo);
+//        Set<Peca> pecas = new HashSet<>();
+//        for (Peca peca : veiculo.getPecas()) {
+//            Peca pecaCarregada = pecaRepository.findById(peca.getIdPeca()).orElseThrow(() -> new EntityNotFoundException("Peca não encontrada com o idPeca: " + peca.getIdPeca()));
+//            pecas.add(pecaCarregada);
+//        }
+//
+//        veiculo.setPecas(pecas);
+//
+//        // Aqui você salva o veículo no banco de dados
+        Veiculo savedVeiculo = veiculoRepository.save(veiculo);
+
+        // Retorna resposta adequada, por exemplo, um ResponseEntity com o veículo salvo
+        return savedVeiculo;
     }
 
     /**
@@ -85,4 +104,5 @@ public class VeiculoController {
             return ResponseEntity.notFound().build();
         }
     }
+
 }
