@@ -20,7 +20,7 @@ public class Producao {
     @JoinColumn(name = "idPeca", referencedColumnName = "idPeca")
     private Peca pecas;
 
-    @OneToMany(mappedBy = "producao")
+    @OneToMany(mappedBy = "producao",cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Qualidade> qualidadesList;
 
