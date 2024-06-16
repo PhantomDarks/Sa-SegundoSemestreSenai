@@ -14,7 +14,6 @@ public class Estoque {
     @ManyToOne()
     @JoinColumn(name = "idPeca", referencedColumnName = "idPeca")
     private Peca pecas;
-
     private Long quantidadeDisponivel;
 
     public Estoque() {
