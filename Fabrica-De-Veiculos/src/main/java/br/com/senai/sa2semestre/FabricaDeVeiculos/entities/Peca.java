@@ -3,10 +3,7 @@ package br.com.senai.sa2semestre.FabricaDeVeiculos.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 public class Peca {
@@ -15,27 +12,29 @@ public class Peca {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idPeca;
     private String pecas;
-    private String descrição;
-    @OneToMany(mappedBy = "pecas")
+    private String descricao;
+
+    @OneToMany(mappedBy = "pecas", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Estoque> estoqueList;
 
     @ManyToMany(mappedBy = "pecas")
-    private Set<Veiculo> listVeiculo = new HashSet<>();
-
-    @OneToMany(mappedBy = "pecas")
     @JsonIgnore
-    private List<Producao> producoes;
+    private List<Veiculo> veiculos = new ArrayList<>();
+
+    @OneToMany(mappedBy = "pecas",cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Producao> producoes= new ArrayList<>();
 
     public Peca() {
     }
 
-    public Peca(Long idPeca, String pecas, String descrição, List<Estoque> estoqueList, Set<Veiculo> listVeiculo, List<Producao> producoes) {
+    public Peca(Long idPeca, String pecas, String descricao, List<Estoque> estoqueList, List<Veiculo> veiculos, List<Producao> producoes) {
         this.idPeca = idPeca;
         this.pecas = pecas;
-        this.descrição = descrição;
+        this.descricao = descricao;
         this.estoqueList = estoqueList;
-        this.listVeiculo = listVeiculo;
+        this.veiculos = veiculos;
         this.producoes = producoes;
     }
 
@@ -55,12 +54,12 @@ public class Peca {
         this.pecas = pecas;
     }
 
-    public String getDescrição() {
-        return descrição;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setDescrição(String descrição) {
-        this.descrição = descrição;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
     public List<Estoque> getEstoqueList() {
@@ -71,12 +70,12 @@ public class Peca {
         this.estoqueList = estoqueList;
     }
 
-    public Set<Veiculo> getListVeiculo() {
-        return listVeiculo;
+    public List<Veiculo> getVeiculos() {
+        return veiculos;
     }
 
-    public void setListVeiculo(Set<Veiculo> listVeiculo) {
-        this.listVeiculo = listVeiculo;
+    public void setVeiculos(List<Veiculo> veiculos) {
+        this.veiculos = veiculos;
     }
 
     public List<Producao> getProducoes() {
@@ -88,40 +87,22 @@ public class Peca {
     }
 
     @Override
-    public String toString() {
-        return "Peca{" +
-                "idPeca=" + idPeca +
-                ", pecas='" + pecas + '\'' +
-                ", descrição='" + descrição + '\'' +
-                ", estoqueList=" + estoqueList +
-                ", listVeiculo=" + listVeiculo +
-                ", producoes=" + producoes +
-                '}';
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
         Peca peca = (Peca) o;
-
-        if (!idPeca.equals(peca.idPeca)) return false;
-        if (!Objects.equals(pecas, peca.pecas)) return false;
-        if (!Objects.equals(descrição, peca.descrição)) return false;
-        if (!Objects.equals(estoqueList, peca.estoqueList)) return false;
-        if (!Objects.equals(listVeiculo, peca.listVeiculo)) return false;
-        return Objects.equals(producoes, peca.producoes);
+        return idPeca.equals(peca.idPeca) && Objects.equals(pecas, peca.pecas) && Objects.equals(descricao, peca.descricao) && Objects.equals(estoqueList, peca.estoqueList) && Objects.equals(veiculos, peca.veiculos) && Objects.equals(producoes, peca.producoes);
     }
 
     @Override
     public int hashCode() {
         int result = idPeca.hashCode();
-        result = 31 * result + (pecas != null ? pecas.hashCode() : 0);
-        result = 31 * result + (descrição != null ? descrição.hashCode() : 0);
-        result = 31 * result + (estoqueList != null ? estoqueList.hashCode() : 0);
-        result = 31 * result + (listVeiculo != null ? listVeiculo.hashCode() : 0);
-        result = 31 * result + (producoes != null ? producoes.hashCode() : 0);
+        result = 31 * result + Objects.hashCode(pecas);
+        result = 31 * result + Objects.hashCode(descricao);
+        result = 31 * result + Objects.hashCode(estoqueList);
+        result = 31 * result + Objects.hashCode(veiculos);
+        result = 31 * result + Objects.hashCode(producoes);
         return result;
     }
 }
