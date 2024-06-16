@@ -1,16 +1,18 @@
 package br.com.senai.sa2semestre.FabricaDeVeiculos.controllers;
 
 import br.com.senai.sa2semestre.FabricaDeVeiculos.entities.Peca;
+import br.com.senai.sa2semestre.FabricaDeVeiculos.entities.Veiculo;
 import br.com.senai.sa2semestre.FabricaDeVeiculos.repositories.PecaRepository;
+import br.com.senai.sa2semestre.FabricaDeVeiculos.repositories.VeiculoRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
-@RequestMapping("/peca")
+@RequestMapping("/pecas")
 public class PecaController {
 
     @Autowired
@@ -47,6 +49,7 @@ public class PecaController {
      */
     @PostMapping
     public Peca createPeca(@RequestBody Peca peca) {
+
         return pecaRepository.save(peca);
     }
 
@@ -85,4 +88,6 @@ public class PecaController {
             return ResponseEntity.notFound().build();
         }
     }
+
+
 }
