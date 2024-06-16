@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/qualidade")
+@RequestMapping("/qualidades")
 public class QualidadeController {
 
     @Autowired
