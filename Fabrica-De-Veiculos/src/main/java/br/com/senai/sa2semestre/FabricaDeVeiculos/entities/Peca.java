@@ -1,6 +1,8 @@
 package br.com.senai.sa2semestre.FabricaDeVeiculos.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.*;
@@ -16,7 +18,7 @@ public class Peca {
 
     @OneToMany(mappedBy = "pecas", cascade = CascadeType.ALL)
     @JsonIgnore
-    private List<Estoque> estoqueList;
+    private List<Estoque> estoqueList = new ArrayList<>();
 
     @ManyToMany(mappedBy = "pecas")
     @JsonIgnore
@@ -84,6 +86,18 @@ public class Peca {
 
     public void setProducoes(List<Producao> producoes) {
         this.producoes = producoes;
+    }
+
+    @Override
+    public String toString() {
+        return "Peca{" +
+                "idPeca=" + idPeca +
+                ", pecas='" + pecas + '\'' +
+                ", descricao='" + descricao + '\'' +
+                ", estoqueList=" + estoqueList +
+                ", veiculos=" + veiculos +
+                ", producoes=" + producoes +
+                '}';
     }
 
     @Override
