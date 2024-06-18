@@ -6,6 +6,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 import java.util.Objects;
+
+/**
+ * Representa um usuário no sistema.
+ */
 @Entity
 public class Usuario {
 
@@ -17,6 +21,14 @@ public class Usuario {
     private String senha;
     private String perfil;
 
+    /**
+     * Construtor com todos os campos.
+     * @param idUsuario o ID do usuário.
+     * @param nome o nome do usuário.
+     * @param email o email do usuário.
+     * @param senha a senha do usuário.
+     * @param perfil o perfil do usuário.
+     */
     public Usuario(Long idUsuario, String nome, String email, String senha, String perfil) {
         this.idUsuario = idUsuario;
         this.nome = nome;
@@ -25,47 +37,107 @@ public class Usuario {
         this.perfil = perfil;
     }
 
+    /**
+     * Construtor padrão.
+     */
     public Usuario() {
     }
 
+    /**
+     * Obtém o ID do usuário.
+     * @return o ID do usuário.
+     */
     public Long getIdUsuario() {
         return idUsuario;
     }
 
+    /**
+     * Define o ID do usuário.
+     * @param idUsuario o novo ID do usuário.
+     */
     public void setIdUsuario(Long idUsuario) {
         this.idUsuario = idUsuario;
     }
 
+    /**
+     * Obtém o nome do usuário.
+     * @return o nome do usuário.
+     */
     public String getNome() {
         return nome;
     }
 
+    /**
+     * Define o nome do usuário.
+     * @param nome o novo nome do usuário.
+     */
     public void setNome(String nome) {
         this.nome = nome;
     }
 
+    /**
+     * Obtém o email do usuário.
+     * @return o email do usuário.
+     */
     public String getEmail() {
         return email;
     }
 
+    /**
+     * Define o email do usuário.
+     * @param email o novo email do usuário.
+     */
     public void setEmail(String email) {
         this.email = email;
     }
 
+    /**
+     * Obtém a senha do usuário.
+     * @return a senha do usuário.
+     */
     public String getSenha() {
         return senha;
     }
 
+    /**
+     * Define a senha do usuário.
+     * @param senha a nova senha do usuário.
+     */
     public void setSenha(String senha) {
         this.senha = senha;
     }
 
+    /**
+     * Obtém o perfil do usuário.
+     * @return o perfil do usuário.
+     */
     public String getPerfil() {
         return perfil;
     }
 
+    /**
+     * Define o perfil do usuário.
+     * @param perfil o novo perfil do usuário.
+     */
     public void setPerfil(String perfil) {
         this.perfil = perfil;
+    }
+
+    /**
+     * Retorna uma representação em string do usuário.
+     * A string inclui o ID do usuário, nome, email, senha e perfil.
+     *
+     * @return uma string que representa o usuário.
+     */
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "idUsuario=" + idUsuario +
+                ", nome='" + nome + '\'' +
+                ", email='" + email + '\'' +
+                ", senha='" + senha + '\'' +
+                ", perfil='" + perfil + '\'' +
+                '}';
     }
 
     @Override
@@ -74,12 +146,11 @@ public class Usuario {
         if (o == null || getClass() != o.getClass()) return false;
 
         Usuario usuario = (Usuario) o;
-
-        if (!idUsuario.equals(usuario.idUsuario)) return false;
-        if (!Objects.equals(nome, usuario.nome)) return false;
-        if (!Objects.equals(email, usuario.email)) return false;
-        if (!Objects.equals(senha, usuario.senha)) return false;
-        return Objects.equals(perfil, usuario.perfil);
+        return idUsuario.equals(usuario.idUsuario) &&
+                Objects.equals(nome, usuario.nome) &&
+                Objects.equals(email, usuario.email) &&
+                Objects.equals(senha, usuario.senha) &&
+                Objects.equals(perfil, usuario.perfil);
     }
 
     @Override
@@ -90,16 +161,5 @@ public class Usuario {
         result = 31 * result + (senha != null ? senha.hashCode() : 0);
         result = 31 * result + (perfil != null ? perfil.hashCode() : 0);
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return "Usuario{" +
-                "idUsuario=" + idUsuario +
-                ", nome='" + nome + '\'' +
-                ", email='" + email + '\'' +
-                ", senha='" + senha + '\'' +
-                ", perfil='" + perfil + '\'' +
-                '}';
     }
 }

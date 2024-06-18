@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Controlador REST para gerenciamento de Qualidade.
+ */
 @RestController
 @RequestMapping("/qualidades")
 public class QualidadeController {

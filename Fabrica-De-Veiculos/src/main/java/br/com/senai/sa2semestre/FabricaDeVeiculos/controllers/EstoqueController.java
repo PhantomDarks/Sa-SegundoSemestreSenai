@@ -9,81 +9,79 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Controlador REST para gerenciamento do Estoque.
+ */
+@RestController
+@RequestMapping("/estoques")
+public class EstoqueController {
+
+    @Autowired
+    private EstoqueRepository estoqueRepository;
 
     /**
-     * Controlador REST para gerenciamento de equipamentos.
+     * Obtém todos os estoques.
+     *
+     * @return uma lista de estoques.
      */
-    @RestController
-    @RequestMapping("/estoques")
-    public class EstoqueController {
+    @GetMapping
+    public List<Estoque> getAllEstoques() {
+        return estoqueRepository.findAll();
+    }
 
-        @Autowired
-        private EstoqueRepository estoqueRepository;
+    /**
+     * Obtém um estoque por ID.
+     * @param id o ID do estoque.
+     * @return o estoque com o ID especificado.
+     */
+    @GetMapping("/{id}")
+    public ResponseEntity<Estoque> getEstoqueById(@PathVariable Long id) {
+        Optional<Estoque> estoqueBuscado = estoqueRepository.findById(id);
+        return estoqueBuscado.map(ResponseEntity::ok).orElseGet(() ->
+                ResponseEntity.notFound().build());
+    }
 
-        /**
-         * Obtém todos os equipamentos.
-         *
-         * @return uma lista de equipamentos.
-         */
-        @GetMapping
-        public List<Estoque> getAllEquipamentos() {
-            return estoqueRepository.findAll();
-        }
+    /**
+     * Cria um novo estoque.
+     * @param estoque o novo estoque.
+     * @return o estoque criado.
+     */
+    @PostMapping
+    public Estoque createEstoque(@RequestBody Estoque estoque) {
+        return estoqueRepository.save(estoque);
+    }
 
-        /**
-         * Obtém um equipamento por ID.
-         * @param id o ID do equipamento.
-         * @return o equipamento com o ID especificado.
-         */
-        @GetMapping("/{id}")
-        public ResponseEntity<Estoque> getEstoqueById(@PathVariable Long id) {
-            Optional<Estoque> estoqueBuscado = estoqueRepository.findById(id);
-            return estoqueBuscado.map(ResponseEntity::ok).orElseGet(() ->
-                    ResponseEntity.notFound().build());
-        }
-
-        /**
-         * Cria um novo equipamento.
-         * @param estoque o novo equipamento.
-         * @return o equipamento criado.
-         */
-        @PostMapping
-        public Estoque createEquipamento(@RequestBody Estoque estoque) {
-            return estoqueRepository.save(estoque);
-        }
-
-        /**
-         * Atualiza um equipamento existente.
-         * @param id o ID do equipamento a ser atualizado.
-         * @param estoqueComDadosAtualizados os novos dados do equipamento.
-         * @return o equipamento atualizado.
-         */
-        @PutMapping("/{id}")
-        public ResponseEntity<Estoque> updateEquipamento(@PathVariable Long id,
-                                                             @RequestBody Estoque estoqueComDadosAtualizados) {
-            Optional<Estoque> estoqueExistente = estoqueRepository.findById(id);
-            if (estoqueExistente.isPresent()) {
-                estoqueComDadosAtualizados.setIdEstoque(id);
-                return ResponseEntity.ok(estoqueRepository.save(estoqueComDadosAtualizados));
-            } else {
-                return ResponseEntity.notFound().build();
-            }
-        }
-
-        /**
-         * Exclui um equipamento por ID.
-         * @param id o ID do equipamento a ser excluído.
-         * @return uma resposta indicando o sucesso ou falha da operação.
-         */
-        @DeleteMapping("/{id}")
-        public ResponseEntity<Void> deleteEquipamento(@PathVariable Long id) {
-            Optional<Estoque> equipamentoParaDeletar = estoqueRepository.findById(id);
-            if (equipamentoParaDeletar.isPresent()) {
-                estoqueRepository.delete(equipamentoParaDeletar.get());
-                return ResponseEntity.noContent().build();
-            } else {
-                return ResponseEntity.notFound().build();
-            }
+    /**
+     * Atualiza um estoque existente.
+     * @param id o ID do estoque a ser atualizado.
+     * @param estoqueComDadosAtualizados os novos dados do estoque.
+     * @return o estoque atualizado.
+     */
+    @PutMapping("/{id}")
+    public ResponseEntity<Estoque> updateEstoque(@PathVariable Long id,
+                                                 @RequestBody Estoque estoqueComDadosAtualizados) {
+        Optional<Estoque> estoqueExistente = estoqueRepository.findById(id);
+        if (estoqueExistente.isPresent()) {
+            estoqueComDadosAtualizados.setIdEstoque(id);
+            return ResponseEntity.ok(estoqueRepository.save(estoqueComDadosAtualizados));
+        } else {
+            return ResponseEntity.notFound().build();
         }
     }
 
+    /**
+     * Exclui um estoque por ID.
+     * @param id o ID do estoque a ser excluído.
+     * @return uma resposta indicando o sucesso ou falha da operação.
+     */
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteEstoque(@PathVariable Long id) {
+        Optional<Estoque> estoqueParaDeletar = estoqueRepository.findById(id);
+        if (estoqueParaDeletar.isPresent()) {
+            estoqueRepository.delete(estoqueParaDeletar.get());
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+}

@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
+/**
+ * Controlador REST para gerenciamento de Peça.
+ */
 @RestController
 @RequestMapping("/pecas")
 public class PecaController {

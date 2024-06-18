@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
+/**
+ * Controlador REST para gerenciamento de Veiculo.
+ */
+
 @RestController
 @RequestMapping("/veiculos")
 public class VeiculoController {
@@ -54,18 +58,7 @@ public class VeiculoController {
      */
     @PostMapping
     public Veiculo createVeiculo(@RequestBody Veiculo veiculo) {
-//        Set<Peca> pecas = new HashSet<>();
-//        for (Peca peca : veiculo.getPecas()) {
-//            Peca pecaCarregada = pecaRepository.findById(peca.getIdPeca()).orElseThrow(() -> new EntityNotFoundException("Peca não encontrada com o idPeca: " + peca.getIdPeca()));
-//            pecas.add(pecaCarregada);
-//        }
-//
-//        veiculo.setPecas(pecas);
-//
-//        // Aqui você salva o veículo no banco de dados
         Veiculo savedVeiculo = veiculoRepository.save(veiculo);
-
-        // Retorna resposta adequada, por exemplo, um ResponseEntity com o veículo salvo
         return savedVeiculo;
     }
 
