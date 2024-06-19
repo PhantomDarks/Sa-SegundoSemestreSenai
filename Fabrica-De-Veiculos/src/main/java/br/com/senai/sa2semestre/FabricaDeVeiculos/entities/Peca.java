@@ -19,7 +19,7 @@ public class Peca {
     private String pecas;
     private String descricao;
 
-    @OneToMany(mappedBy = "peca", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "pecas", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Estoque> estoqueList = new ArrayList<>();
 
@@ -27,7 +27,7 @@ public class Peca {
     @JsonIgnore
     private List<Veiculo> veiculos = new ArrayList<>();
 
-    @OneToMany(mappedBy = "peca", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "pecas", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Producao> producoes = new ArrayList<>();
 

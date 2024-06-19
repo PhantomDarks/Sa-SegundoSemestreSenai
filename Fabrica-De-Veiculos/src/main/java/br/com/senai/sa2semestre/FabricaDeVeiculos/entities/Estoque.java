@@ -14,7 +14,7 @@ public class Estoque {
 
     @ManyToOne()
     @JoinColumn(name = "idPeca", referencedColumnName = "idPeca")
-    private Peca peca;
+    private Peca pecas;
 
     private Long quantidadeDisponivel;
 
@@ -30,7 +30,7 @@ public class Estoque {
      * @param quantidadeDisponivel a quantidade disponível em estoque.
      */
     public Estoque(Peca peca, Long quantidadeDisponivel) {
-        this.peca = peca;
+        this.pecas = peca;
         this.quantidadeDisponivel = quantidadeDisponivel;
     }
 
@@ -54,16 +54,16 @@ public class Estoque {
      * Obtém a peça relacionada ao item de estoque.
      * @return a peça relacionada ao item de estoque.
      */
-    public Peca getPeca() {
-        return peca;
+    public Peca getPecas() {
+        return pecas;
     }
 
     /**
      * Define a peça relacionada ao item de estoque.
-     * @param peca a nova peça relacionada ao item de estoque.
+     * @param pecas a nova peça relacionada ao item de estoque.
      */
-    public void setPeca(Peca peca) {
-        this.peca = peca;
+    public void setPecas(Peca pecas) {
+        this.pecas = pecas;
     }
 
     /**
@@ -92,7 +92,7 @@ public class Estoque {
     public String toString() {
         return "Estoque{" +
                 "idEstoque=" + idEstoque +
-                ", peca=" + peca +
+                ", peca=" + pecas +
                 ", quantidadeDisponivel=" + quantidadeDisponivel +
                 '}';
     }
@@ -104,11 +104,11 @@ public class Estoque {
 
         Estoque estoque = (Estoque) o;
 
-        return idEstoque.equals(estoque.idEstoque) && Objects.equals(peca, estoque.peca) && Objects.equals(quantidadeDisponivel, estoque.quantidadeDisponivel);
+        return idEstoque.equals(estoque.idEstoque) && Objects.equals(pecas, estoque.pecas) && Objects.equals(quantidadeDisponivel, estoque.quantidadeDisponivel);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idEstoque, peca, quantidadeDisponivel);
+        return Objects.hash(idEstoque, pecas, quantidadeDisponivel);
     }
 }

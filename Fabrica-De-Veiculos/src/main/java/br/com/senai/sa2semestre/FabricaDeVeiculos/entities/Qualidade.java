@@ -146,11 +146,13 @@ public class Qualidade {
         if (o == null || getClass() != o.getClass()) return false;
 
         Qualidade qualidade = (Qualidade) o;
-        return idInspecao.equals(qualidade.idInspecao) &&
-                Objects.equals(dataHora, qualidade.dataHora) &&
-                Objects.equals(resultado, qualidade.resultado) &&
-                Objects.equals(comentarios, qualidade.comentarios) &&
-                Objects.equals(producao, qualidade.producao);
+
+        if (!idInspecao.equals(qualidade.idInspecao)) return false;
+        if (!Objects.equals(dataHora, qualidade.dataHora)) return false;
+        if (!Objects.equals(resultado, qualidade.resultado)) return false;
+        if (!Objects.equals(comentarios, qualidade.comentarios))
+            return false;
+        return producao.equals(qualidade.producao);
     }
 
     @Override
@@ -159,7 +161,7 @@ public class Qualidade {
         result = 31 * result + (dataHora != null ? dataHora.hashCode() : 0);
         result = 31 * result + (resultado != null ? resultado.hashCode() : 0);
         result = 31 * result + (comentarios != null ? comentarios.hashCode() : 0);
-        result = 31 * result + (producao != null ? producao.hashCode() : 0);
+        result = 31 * result + producao.hashCode();
         return result;
     }
 }
